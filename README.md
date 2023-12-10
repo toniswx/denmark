@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Logo](https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/65609afd52c3c6c606ab75de_Basel-colored.svg)
 
-## Getting Started
 
-First, run the development server:
+## Our app streamlines tasks, boosts productivity, and simplifies teamwork. Stay organized, communicate effortlessly.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Discover seamless collaboration on our powerful platform, catering to both solo and team endeavors. With an intuitive interface and robust task management, it transforms work into a streamlined experience. Boost productivity, enhance communication, and effortlessly meet deadlines. Your journey to efficient and organized collaboration begins here.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![App Screenshot](https://raw.githubusercontent.com/de-Padua/Basel/main/public/aasdasdas.PNG)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Development log
 
-To learn more about Next.js, take a look at the following resources:
+10/12/2023 -  Start of read-me logs 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Roadmap
 
-## Deploy on Vercel
+- Task Creation and Assignment - _Ability to create tasks with titles, descriptions, due dates, and priority levels. Option to assign tasks to specific team members._
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Task Tracking Clear visibility -  _into the status of each task (e.g., to-do, in progress, completed). Progress tracking to monitor task completion_
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+- Collaboration and Communication - _Commenting or discussion threads attached to each task for team communication. Notifications for updates, mentions, or changes to tasks._
+
+- Due Date Reminders - _Automated reminders for upcoming task due dates to avoid missed deadlines._
+## 
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+
+
+
+## Feedback
+
+Se você tiver algum feedback, por favor nos deixe saber criando um novo Issue.
+
+
+## Stack utilizada
+
+**Front-end:** React, Redux, TailwindCSS,Next,TS,JS
+
+**Back-end:** Node, Express,Mongo
+
