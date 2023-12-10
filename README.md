@@ -17,34 +17,34 @@ Discover seamless collaboration on our powerful platform, catering to both solo 
 ## Roadmap
 
 ## 1. **Project Setup**
-   - [ ] Define project scope and requirements
-   - [ ] Set up version control (e.g., Git)
-   - [ ] Choose a development stack (e.g., MERN, MEAN, Django)
+   - [x] Define project scope and requirements
+   - [x] Set up version control (e.g., Git)
+   - [x] Choose a development stack (MERN) 
 
 ## 2. **Frontend Development**
    - [ ] Design user interface mockups
-   - [ ] Set up project structure
-   - [ ] Create main layout and navigation components
+   - [x] Set up project structure
+   - [x] Create main layout and navigation components
    - [ ] Implement task list view
-   - [ ] Develop task creation and editing forms
-   - [ ] Add responsiveness and styling
+   - [x] Develop task creation and editing forms
+   - [x] Add responsiveness and styling
 
 ## 3. **Backend Development**
-   - [ ] Set up server and database (e.g., Node.js with Express and MongoDB)
-   - [ ] Implement user authentication and authorization
-   - [ ] Create API endpoints for tasks (CRUD operations)
+   - [x] Set up server and database (e.g., Node.js with Express and MongoDB)
+   - [x] Implement user authentication and authorization
+   - [ ] Create API endpoints for tasks (CRUD operations) 
    - [ ] Implement task-related business logic
    - [ ] Set up error handling and validation
 
 ## 4. **Integration**
-   - [ ] Connect frontend to backend API
-   - [ ] Test API calls and data retrieval
-   - [ ] Handle authentication and authorization on the frontend
-   - [ ] Ensure smooth data flow between frontend and backend
+   - [x] Connect frontend to backend API
+   - [x] Test API calls and data retrieval
+   - [x] Handle authentication and authorization on the frontend
+   - [x] Ensure smooth data flow between frontend and backend
 
 ## 5. **User Authentication**
-   - [ ] Implement user registration and login functionality
-   - [ ] Set up secure password storage
+   - [x] Implement user registration and login functionality
+   - [x] Set up secure password storage (bcrypt)
    - [ ] Implement password recovery/reset functionality
 
 ## 6. **Testing**
@@ -65,7 +65,7 @@ Discover seamless collaboration on our powerful platform, catering to both solo 
    - [ ] Plan for regular maintenance and updates
 
 ## 9. **Documentation**
-   - [ ] Create user documentation (how-to guides, FAQs)
+   - [x] Create user documentation (how-to guides, FAQs)
    - [ ] Document API endpoints for potential future integrations
    - [ ] Write developer documentation for codebase and architecture
 
