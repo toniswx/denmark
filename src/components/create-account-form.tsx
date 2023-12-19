@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -33,10 +33,13 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useCreateNewAccount from "../../hooks/useCreateAccount";
+import userStore from "../../store/user";
 function createAccountForm() {
 
   
   const router = useRouter()
+  const resetUser = userStore((state) => state.resetUser)
+
   const [loadinSpin,setLoadSpin] = useState<boolean>(false)
   const appFeatures = [
     {
@@ -163,6 +166,13 @@ function createAccountForm() {
     },
   ];
 
+ 
+  useEffect(()=>{
+    sessionStorage.clear()
+    resetUser()
+
+  },[])
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<{ message: null | string }>({
     message: null,
@@ -193,8 +203,11 @@ function createAccountForm() {
     setLoadSpin(true)
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+  
+
+
     try {
-      const response = await fetch("http://localhost:3030/create_new_user", {
+      const response = await fetch("http://localhost:3030/user/create/new", {
         method: "POST",
         credentials: "include",
         headers:{
@@ -206,7 +219,7 @@ function createAccountForm() {
   
        const data:ApiResponse = await response.json()
 
- 
+       
 
        if(data.message === "Email already in use"){
          console.log("email in use")
@@ -216,7 +229,7 @@ function createAccountForm() {
         }, 1200)
       
       }else if(data.status === 'success'){
-        router.push("/home")
+        router.push("/dashboard")
       }
 
        
