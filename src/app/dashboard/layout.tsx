@@ -10,6 +10,7 @@ import getCurrentUserLIB from "@/lib/getTeam";
 import userStore from "../../../store/user";
 import loadStore from "../../../store/load";
 import teamStore from "../../../store/project";
+import Navbar from "@/components/navbar";
 function layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [userData, status] = useGetCurrentUser();
@@ -52,12 +53,14 @@ function layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-start">
+    <div className="h-screen w-full flex flex-col items-center justify-start">
       {globalLoad.load === false ? (
         <>
-          <div className="">
-            <Menubar />
+          
+          <div className="w-full">
+            <Navbar />
           </div>
+          
           {children}
         </>
       ) : (

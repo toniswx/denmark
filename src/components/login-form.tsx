@@ -49,7 +49,7 @@ function LoginForm() {
     });
 
    if(data.ok){
-      route.push("/dashboard 1")
+      route.push("/dashboard")
    }
   
   

@@ -88,7 +88,8 @@ function page({ params }: { params: { project: string } }) {
         status: "To-do",
         comments: [],
         admins: [],
-        teamId:user.teams[team].teamId
+        teamId:user.teams[team].teamId,
+        feed:[{id:uuidv4(),action:'Opened this issue',time:new Date(),name:user.name}]
 
       };
 

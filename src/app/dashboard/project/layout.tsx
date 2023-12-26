@@ -2,7 +2,7 @@ import React from 'react'
 
 function layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className='w-full h-screen'>
+    <div className='h-screen overflow-y-scroll w-full '>
         {children}
     </div>
   )

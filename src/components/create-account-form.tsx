@@ -199,7 +199,8 @@ function createAccountForm() {
   });
 
   async function onSubmit(values: z.infer<typeof newAccountFormSchema>) {
- 
+     
+    sessionStorage.clear()
     setLoadSpin(true)
     // Do something with the form values.
     // ✅ This will be type-safe and validated.

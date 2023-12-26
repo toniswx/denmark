@@ -53,6 +53,8 @@ function page() {
 export default page;
 
 const StepOne = () => {
+
+
   const [userData, status] = useGetCurrentUser();
 
   const projectIndex = userStore((state) => state.currentTeamIndex);
@@ -67,10 +69,10 @@ const StepOne = () => {
     resolver: zodResolver(multiStepForm),
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof multiStepForm>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+
+
+    console.log(values)
 
     fetch("http://localhost:3030/team/create/new", {
       method: "POST",
@@ -86,7 +88,7 @@ const StepOne = () => {
         }
         return resp.json();
       })
-      .then((data) => {
+      .then(() => {
         getData();
       })
       .catch((error) => {
@@ -106,7 +108,7 @@ const StepOne = () => {
 
     setCurrentUser(resp);
     
-    if (userData) {
+    if (userData !== null) {
       setTimeout(() => {
         router.push("/dashboard/");
       }, 1000);
@@ -136,9 +138,10 @@ const StepOne = () => {
         <div className="w-full flex items-center justify-center">
           <Button
             type="submit"
-            disabled={loadButtonState === true ? true : false}
+            className={loadButtonState ? "-z-10" : ""}
             onClick={() => {
               setLoadButtonState(true);
+              console.log('xxxxxxxx')
             }}
           >
             {loadButtonState === true ? "Please wait" : "Next"}
@@ -154,43 +157,4 @@ const StepOne = () => {
   );
 };
 
-const StepTwo = () => {
-  const formData = multiStepFormStore((state) => state.formData);
-  const setCurrentUser = userStore((state) => state.setCurrentUser);
 
-  useEffect(() => {
-    async function getData() {
-      const getUserData = await fetch(
-        "http://localhost:3030/user/get/current",
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const resp: sessionApiCall<user> = await getUserData.json();
-
-      setCurrentUser(resp);
-    }
-    getData();
-  }, []);
-
-  return (
-    <div className="space-y-9 w-full flex items-center justify-center flex-col">
-      <div className="mb-5">
-        <p className="mb-2 text-muted-foreground">
-          Send this link to users who you want to colaborate
-        </p>
-      </div>
-      <Button variant={"link"}>
-        Copy invite link
-        <Link1Icon className="mx-2" />
-      </Button>
-      <div className="flex items-center justify-center">
-        <Button className="my-4">Next</Button>
-      </div>
-    </div>
-  );
-};

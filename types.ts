@@ -22,6 +22,7 @@ export type team = {
 };
 export type user = {
   id: string;
+  _id?: string;
   name: string;
   password: string;
   email: string;
@@ -42,6 +43,12 @@ export type task = {
     id:string,
     time: Date
   }
+  feed:{
+    id: string;
+    action: string;
+    time: Date;
+    name: string;
+  }[]
 };
 
 export type comment = { owner: string; id: string; text: string; date: Date };
