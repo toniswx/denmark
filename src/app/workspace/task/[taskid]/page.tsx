@@ -86,7 +86,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Value } from "@radix-ui/react-select";
-
+import useGetCurrentUser from "../../../../../hooks/useGetCurrentUse";
+import { useStore } from "zustand";
+import { comment } from "postcss";
 const formSchema = z.object({
   comment: z.string().min(1, {
     message: "Comments can't be empty",
@@ -108,6 +110,12 @@ function page({ params }: { params: { taskid: string } }) {
     index: undefined | number;
   }>({ edit: false, index: undefined });
 
+  const [isReply, setReply] = useState<{
+    edit: boolean;
+    index: undefined | number;
+  }>({ edit: false, index: undefined });
+  const team = teamStore((state) => state.currentTeam);
+
   useEffect(() => {
     getTask();
     const socket = io("http://localhost:3030");
@@ -125,6 +133,7 @@ function page({ params }: { params: { taskid: string } }) {
     };
   }, []);
 
+  const [userData, load] = useGetCurrentUser();
   const user = userStore();
 
   async function getTask() {
@@ -155,7 +164,7 @@ function page({ params }: { params: { taskid: string } }) {
 
   function onSubmit(data: z.infer<typeof formSchema>) {
     const newComment: comment = {
-      owner: user.user!.name,
+      owner: userData!.name,
       text: data.comment,
       id: uuid(),
       date: new Date(),
@@ -168,7 +177,7 @@ function page({ params }: { params: { taskid: string } }) {
 
   function onSubmitNewComment(data: z.infer<typeof newCommentForm>) {
     const newComment: comment = {
-      owner: user.user!.name,
+      owner: userData!.name,
       text: data.comment,
       id: uuid(),
       date: new Date(),
@@ -176,8 +185,7 @@ function page({ params }: { params: { taskid: string } }) {
 
     editComment(newComment);
 
-    form2.resetField("comment");
-    setEditing({ edit: false, index: undefined });
+    clearForm();
   }
 
   async function addNewComment<T>(comment: T) {
@@ -195,21 +203,45 @@ function page({ params }: { params: { taskid: string } }) {
   }
 
   async function editComment(comment: comment) {
-    const resp = await fetch(
-      `http://localhost:3030/tasks/${params.taskid}/comment`,
-      {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          comment: comment,
-          action: "edit",
-          comment_id: currentTask?.comments[isEditing.index!],
-        }),
-      }
-    );
+    if (isReply.edit === true) {
+      console.log("send");
+      const resp = await fetch(
+        `http://localhost:3030/tasks/${params.taskid}/comment`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            reply_to: currentTask?.comments[isReply.index!],
+            comment: comment,
+            action: "reply",
+            comment_id: { _id: "" },
+          }),
+        }
+      );
+
+      clearForm();
+    } else if (isEditing.edit === true) {
+      clearForm();
+
+      const resp = await fetch(
+        `http://localhost:3030/tasks/${params.taskid}/comment`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            comment: comment,
+            action: "edit",
+            comment_id: currentTask?.comments[isEditing.index!],
+          }),
+        }
+      );
+    }
   }
 
   const options = {
@@ -237,6 +269,12 @@ function page({ params }: { params: { taskid: string } }) {
     );
   }
 
+  const clearForm = () => {
+    form2.resetField("comment");
+    setEditing({ edit: false, index: undefined });
+    setReply({ edit: false, index: undefined });
+  };
+
   return (
     <div className="flex  h-full ">
       {error ? (
@@ -255,7 +293,7 @@ function page({ params }: { params: { taskid: string } }) {
                           {currentTask.title}{" "}
                         </p>
                       </div>
-                      {currentTask.createdBy.id === user.user?.id ? (
+                      {currentTask.createdBy.id === userData?._id ? (
                         <Menubar className="w-fit rounded-lg">
                           <MenubarMenu>
                             <MenubarTrigger>
@@ -272,7 +310,6 @@ function page({ params }: { params: { taskid: string } }) {
                               </MenubarItem>
                               <MenubarItem>Delete task</MenubarItem>
                               <MenubarSeparator />
-                           
                             </MenubarContent>
                           </MenubarMenu>
                         </Menubar>
@@ -333,87 +370,143 @@ function page({ params }: { params: { taskid: string } }) {
                   {currentTask.comments.map((comment, index) => {
                     return (
                       <div className="flex items-center rounded-lg border h-full p-5 justify-between">
-                        <div >
+                        <div className="w-full">
+                    
                           <div className="text-xs flex items-start ">
+                          
+
                             <div className="flex items-center justify-start rounded-lg   h-3">
                               <p className="text-xs   font-semibold  text-blue-500">
                                 {comment.owner}
                               </p>
-                              {comment.owner === currentTask.createdBy.name ? <Badge
-                                className="rounded-md mx-2 h-5"
-                                variant={"outline"}
-                              >
-                                <p className="text-xs">Author</p>
-                              </Badge> : <Badge
-                                className="rounded-md mx-2 h-5"
-                                
-                              >
-                                <p className="text-xs">Me</p>
-                              </Badge>}
-                              <p className="text-xs  text-muted-foreground font-semibold">
+                              {comment.owner === currentTask.createdBy.name ? (
+                                <Badge
+                                  className="rounded-md mx-2 h-5"
+                                  variant={"outline"}
+                                >
+                                  <p className="text-xs">Author</p>
+                                </Badge>
+                              ) : (
+                                ""
+                              )}
+                              <p className="text-xs ml-1  text-muted-foreground font-semibold">
                                 {new Date(comment.date).toLocaleString("en-US")}
                               </p>
                             </div>
                           </div>
-                         
+
                           {isEditing.index === index ? (
-                           <div className="mt-6 mb-2"> 
-                           <Form {...form2}>
-                           <form
-                             onSubmit={form2.handleSubmit(
-                               onSubmitNewComment
-                             )}
-                             className=""
-                           >
-                             <FormField
-                               control={form2.control}
-                               name="comment"
-                               render={({ field }) => (
-                                 <FormItem>
-                                   <FormControl>
-                                     <Textarea
-                                       placeholder="Add your comment here..."
-                                       {...field}
-                                       defaultValue={comment.text}
-                                      
-                                     />
-                                   </FormControl>
+                            <div className="mt-6 mb-2">
+                              <Form {...form2}>
+                                <form
+                                  onSubmit={form2.handleSubmit(
+                                    onSubmitNewComment
+                                  )}
+                                  className=""
+                                >
+                                  <FormField
+                                    control={form2.control}
+                                    name="comment"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormControl>
+                                          <Textarea
+                                            placeholder="Add your comment here..."
+                                            {...field}
+                                            defaultValue={comment.text}
+                                          />
+                                        </FormControl>
 
-                                   <FormMessage />
-                                 </FormItem>
-                               )}
-                             />
-                             <div className="space-x-3 mt-2">
-                               <Button type="submit" onSubmit={() => {
-
-                               }}>
-                                 Submit
-                               </Button>
-                               <Button
-                                 type="button"
-                                 variant={"destructive"}
-                                 onClick={() => {
-                                   setEditing({
-                                     edit: false,
-                                     index: undefined,
-                                   });
-                                 }}
-                               >
-                                 Cancel
-                               </Button>
-                             </div>
-                           </form>
-                         </Form></div>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <div className="space-x-3 mt-2">
+                                    <Button type="submit" onSubmit={() => {}}>
+                                      Submit
+                                    </Button>
+                                    <Button
+                                      type="button"
+                                      variant={"destructive"}
+                                      onClick={() => {
+                                        setEditing({
+                                          edit: false,
+                                          index: undefined,
+                                        });
+                                      }}
+                                    >
+                                      Cancel
+                                    </Button>
+                                  </div>
+                                </form>
+                              </Form>
+                            </div>
                           ) : (
                             <div className="mt-5 font-semibold text-muted-foreground  border-l-slate-600">
-                            <p className=" text-xs">{comment.text}</p>
-                          </div>
+                                  {comment.reply_to &&  <div className="w-full border-l  flex flex-col justify-start items-start px-2 my-4 grayscale opacity-50">
+                              <p className="text-xs   font-semibold  text-blue-500 ">
+                                {comment.reply_to?.owner}
+                              </p>
+                              <div className="mt-5 font-semibold text-muted-foreground  border-l-slate-600">
+                              <p className=" text-xs">{comment.reply_to?.text}</p>
+                            </div>
+                            </div>}
+                              <p className=" text-xs ">{comment.text}</p>
+                            </div>
                           )}
-                         
+                          {isReply.index === index ? (
+                            <div className="mt-6 mb-2 w-full">
+                              <Form {...form2}>
+                                <form
+                                  onSubmit={form2.handleSubmit(
+                                    onSubmitNewComment
+                                  )}
+                                  className=""
+                                >
+                                  <FormField
+                                    control={form2.control}
+                                    name="comment"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormControl>
+                                          <Textarea
+                                            placeholder="Add your reply here..."
+                                            {...field}
+                                            className="w-full mb-4"
+                                          />
+                                        </FormControl>
+
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <div className="space-x-3 mt-2">
+                                    <Button type="submit" onSubmit={() => {}}>
+                                      Submit
+                                    </Button>
+                                    <Button
+                                      type="button"
+                                      variant={"destructive"}
+                                      onClick={() => {
+                                        setReply({
+                                          edit: false,
+                                          index: undefined,
+                                        });
+                                      }}
+                                    >
+                                      Cancel
+                                    </Button>
+                                  </div>
+                                </form>
+                              </Form>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                         <div className=" flex items-start justify-start px-2 py-3">
                           <Menubar className="rounded-lg flex h-5">
-                            {currentTask.createdBy.id === user.user?.id ? (
+                            {comment.owner === userData?.name ? (
                               ""
                             ) : (
                               <MenubarMenu>
@@ -421,7 +514,11 @@ function page({ params }: { params: { taskid: string } }) {
                                   <Reply className="h-4" />
                                 </MenubarTrigger>
                                 <MenubarContent>
-                                  <MenubarItem>
+                                  <MenubarItem
+                                    onClick={() => {
+                                      setReply({ edit: true, index: index });
+                                    }}
+                                  >
                                     Reply this comment{" "}
                                     <MenubarShortcut>⌘T</MenubarShortcut>
                                   </MenubarItem>
@@ -429,21 +526,26 @@ function page({ params }: { params: { taskid: string } }) {
                               </MenubarMenu>
                             )}
 
-                            {currentTask.createdBy.id === user.user?.id ? (
+                            {comment.owner === userData?.name ? (
                               <MenubarMenu>
                                 <MenubarTrigger className=" h-4 w-10 text-xs ">
                                   <DotsHorizontalIcon />
                                 </MenubarTrigger>
                                 <MenubarContent>
-                                  <MenubarItem onClick={()=>{
-                                    setEditing({edit:true,index:index})
-                                  }}>
+                                  <MenubarItem
+                                    onClick={() => {
+                                      setEditing({ edit: true, index: index });
+                                    }}
+                                  >
                                     Edit comment{" "}
                                     <MenubarShortcut>⌘Z</MenubarShortcut>
                                   </MenubarItem>
-                                  <MenubarItem  onClick={() => {
-                                              deleteComment(comment.id);
-                                            }} className="bg-red-500 text-white">
+                                  <MenubarItem
+                                    onClick={() => {
+                                      deleteComment(comment.id);
+                                    }}
+                                    className="bg-red-500 text-white"
+                                  >
                                     Delete comment{" "}
                                     <MenubarShortcut className="text-white">
                                       ⇧⌘Z
@@ -465,19 +567,21 @@ function page({ params }: { params: { taskid: string } }) {
                       <div className="p-4">
                         <h2 className="text-sm font-semibold">
                           This task was closed on
-                          <span className="mx-2">{currentTask.feed
-                            .slice()
-                            .reverse()
-                            .find((item) => item.action === "Closed the task")
-                            ?.time &&
-                            new Date(
-                              currentTask.feed
-                                .slice()
-                                .reverse()
-                                .find(
-                                  (item) => item.action === "Closed the task"
-                                )?.time
-                            ).toLocaleString("en-US")}</span>
+                          <span className="mx-2">
+                            {currentTask.feed
+                              .slice()
+                              .reverse()
+                              .find((item) => item.action === "Closed the task")
+                              ?.time &&
+                              new Date(
+                                currentTask.feed
+                                  .slice()
+                                  .reverse()
+                                  .find(
+                                    (item) => item.action === "Closed the task"
+                                  )?.time
+                              ).toLocaleString("en-US")}
+                          </span>
                         </h2>
                       </div>
                     ) : (
@@ -582,7 +686,6 @@ const editTask = z.object({
 });
 
 const EditTaskC = (props: { task: task; taskId: string }) => {
-  
   const [load, setLoad] = useState(false);
 
   const taskPriorities = [
@@ -603,7 +706,6 @@ const EditTaskC = (props: { task: task; taskId: string }) => {
   const user = userStore();
 
   const form = useForm<z.infer<typeof editTask>>({
-    
     resolver: zodResolver(editTask),
     defaultValues: {
       title: props.task.title,
@@ -626,7 +728,6 @@ const EditTaskC = (props: { task: task; taskId: string }) => {
   }
 
   async function handleEditTask(newTask: task) {
-
     if (newTask.status === "Closed") {
       await fetch(`http://localhost:3030/tasks/edit`, {
         method: "PATCH",

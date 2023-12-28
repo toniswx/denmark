@@ -81,7 +81,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import userStore from "../../store/user";
 import { useRouter } from "next/navigation";
@@ -96,7 +96,7 @@ export function DropdownMenuDemo() {
   const setIndex = userStore((state) => state.setCurrentTeamIndex);
   const [open, setOpen] = useState(false);
   const route = useRouter();
-  const currentTeam = userData?.teams[teamIndex];
+  const team = teamStore((state) => state.currentTeam);
 
   const handleLogOut = async () => {
     try {
@@ -114,6 +114,13 @@ export function DropdownMenuDemo() {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    if (team !== null) {
+      team.adm?.find(i=> i._id === userData?._id)
+      
+    }
+  }, [team]);
 
   const routes = [
     {
@@ -171,14 +178,18 @@ export function DropdownMenuDemo() {
               <Users className="mr-2 h-4 w-4" />
               <span>Create new team</span>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                setOpen(true);
-              }}
-            >
-              <PenToolIcon className="mr-2 h-4 w-4" />
-              <span>Configure team</span>
-            </DropdownMenuItem>
+            {team.adm?.find(i=> i._id === userData?._id) ? (
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpen(true);
+                }}
+              >
+                <PenToolIcon className="mr-2 h-4 w-4" />
+                <span>Configure team</span>
+              </DropdownMenuItem>
+            ) : (
+              ""
+            )}
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
                 <UserPlus className="mr-2 h-4 w-4" />
@@ -273,21 +284,64 @@ const Preferencies = (): JSX.Element => {
   const userData = userStore((state) => state.user);
   const teamIndex = userStore((state) => state.currentTeamIndex);
   const setIndex = userStore((state) => state.setCurrentTeamIndex);
-  const currentTeam = userData?.teams[teamIndex];
+  const team = teamStore((state) => state.currentTeam);
 
   const form = useForm<z.infer<typeof preferenciesSchema>>({
     resolver: zodResolver(preferenciesSchema),
     defaultValues: {
-      teamName: currentTeam?.teamName,
+      teamName: team?.teamName,
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof preferenciesSchema>) {
+  async function onSubmit(values: z.infer<typeof preferenciesSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    const resp = await fetch("http://localhost:3030/team/config", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        data: {
+          teamId: team?.teamId,
+          newTeamName: values.teamName,
+          userId: userData?.id,
+        },
+        action: "changeTeamName",
+      }),
+    });
+
+    const data = await resp.json();
+    if (data.ok === true) {
+      sessionStorage.clear();
+      location.reload();
+    }
+
+    console.log(team);
   }
+
+  const handleDeleteTeam = async () => {
+    const resp = await fetch("http://localhost:3030/team/config", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        data: {
+          teamId: team?.teamId,
+        },
+        action: "deleteTeam",
+      }),
+    });
+
+    const data = await resp.json();
+    if (data.ok === true) {
+      sessionStorage.clear();
+      location.reload();
+    }
+
+    console.log(team);
+  };
 
   return (
     <div className="p-2 space-y-5">
@@ -328,7 +382,14 @@ const Preferencies = (): JSX.Element => {
             undone.
           </p>
         </div>
-        <Button variant={"destructive"}>Delete this team</Button>
+        <Button
+          variant={"destructive"}
+          onClick={() => {
+            handleDeleteTeam();
+          }}
+        >
+          Delete this team
+        </Button>
       </div>
     </div>
   );
@@ -339,6 +400,36 @@ const Members = (): JSX.Element => {
   const teamIndex = userStore((state) => state.currentTeamIndex);
   const setIndex = userStore((state) => state.setCurrentTeamIndex);
   const team = teamStore((state) => state.currentTeam);
+
+
+  const deleteUserFromTeam = async (id:string) =>{
+     
+    const teamId = team?.teamId
+    const userId = id
+    console.log(id)
+
+    try{
+     const resp = await fetch("http://localhost:3030/team/deleteUser",{
+       method:"POST",
+       credentials:"include",
+       headers:{
+         'Content-Type':'application/json'
+       },
+       body:JSON.stringify({teamId:teamId,_id:userId,email:userData!.email})
+     })
+     const data = await resp.json()
+
+     if(data.ok){
+      location.reload()
+     }
+    }
+    catch(err){
+        throw err
+    }
+   
+ }
+
+
 
   return (
     <div className="w-full ">
@@ -373,21 +464,25 @@ const Members = (): JSX.Element => {
                       <DropdownMenuContent>
                         <DropdownMenuLabel>Manage user</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Delete user</DropdownMenuItem>
-                        
-                        <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Privileges</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-                        
+                        <DropdownMenuItem onClick={()=>{
+                        deleteUserFromTeam(user._id)
+                        }}>Delete user</DropdownMenuItem>
 
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger>
+                            Privileges
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                              <DropdownMenuItem>
+                                Set user as admin
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                Reverse admin rights
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
+                        </DropdownMenuSub>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

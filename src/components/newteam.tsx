@@ -81,13 +81,13 @@ function newteam() {
   const handleAddUserToTeam = async () => {
     const userData = {
       name: user?.name,
-      id: user?._id,
+      id: user!._id,
     };
     const teamData = {
       teamId: card?.teamId,
       teamName: card?.teamName,
     };
-
+    console.log(userData);
     const resp = await fetch("http://localhost:3030/team/add/user", {
       method: "POST",
       credentials: "include",
@@ -107,14 +107,10 @@ function newteam() {
 
   return (
     <div className="flex  justify-around flex-col  items-center  ">
-      <div >
-        
+      <div>
         <AlertDialog>
           <AlertDialogTrigger asChild className="">
-            <Button
-              variant="outline"
-              className=""
-            >
+            <Button variant="outline" className="">
               Add new team
             </Button>
           </AlertDialogTrigger>
@@ -179,7 +175,6 @@ function newteam() {
           </AlertDialogContent>
         </AlertDialog>
       </div>
-    
     </div>
   );
 }

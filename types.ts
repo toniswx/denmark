@@ -19,10 +19,12 @@ export type team = {
   users: user[];
   tasks: task[];
   closed_tasks: task[];
+  adm?: { _id: string }[];
 };
 export type user = {
   id: string;
-  _id?: string;
+  _id: string;
+  bio:string,
   name: string;
   password: string;
   email: string;
@@ -30,25 +32,31 @@ export type user = {
 };
 
 export type task = {
-  teamId:string
+  teamId: string;
   id: string;
   title: string;
   description: string;
   status: "Completed" | "To-do" | "On-going" | "Closed";
   priority: "High" | "Medium" | "Low" | "Urgent" | "Important" | "Normal";
   comments: comment[];
-  admins:string[],
-  createdBy:{
-    name:string,
-    id:string,
-    time: Date
-  }
-  feed:{
+  admins: string[];
+  createdBy: {
+    name: string;
+    id: string;
+    time: Date;
+  };
+  feed: {
     id: string;
     action: string;
     time: Date;
     name: string;
-  }[]
+  }[];
 };
 
-export type comment = { owner: string; id: string; text: string; date: Date };
+export type comment = {
+  owner: string;
+  id: string;
+  text: string;
+  date: Date;
+  reply_to?: comment;
+};

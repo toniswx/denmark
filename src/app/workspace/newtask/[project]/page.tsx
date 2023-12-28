@@ -78,7 +78,7 @@ function page({ params }: { params: { project: string } }) {
       const newTask: task = {
         createdBy:{
           name:user.name,
-          id:user.id,
+          _id:user._id,
           time:new Date()
         },
         id: uuidv4(),
