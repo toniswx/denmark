@@ -118,7 +118,7 @@ function page() {
     const userId = store.user?._id;
 
     try {
-      const resp = await fetch("http://localhost:3030/team/deleteUser", {
+      const resp = await fetch("https://basel-ru5b.vercel.app/team/deleteUser", {
         method: "POST",
         credentials: "include",
         headers: {
