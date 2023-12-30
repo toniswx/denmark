@@ -109,7 +109,7 @@ function page({ params }: { params: { project: string } }) {
     console.log("oi");
 
     try {
-      const resp = await fetch("http://localhost:3030/team/newtask", {
+      const resp = await fetch("https://basel-ru5b.vercel.app/team/newtask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
