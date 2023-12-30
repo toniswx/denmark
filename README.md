@@ -1,4 +1,4 @@
-![Logo]([https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/65609b0534c00b1088adf53d_Basel-white.svg](https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f4aef83aaf35900e0ae0e_denmark-colored.svg))
+![Logo](https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f4aef83aaf35900e0ae0e_denmark-colored.svg)
 
 
 ## Our app streamlines tasks, boosts productivity, and simplifies teamwork. Stay organized, communicate effortlessly.
