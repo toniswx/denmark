@@ -121,7 +121,7 @@ function page({ params }: { params: { taskid: string } }) {
 
   useEffect(() => {
     getTask();
-    const socket = io("http://localhost:3030");
+    const socket = io("https://basel-ru5b.vercel.app");
 
     socket.on("connect", () => {
       console.log(socket.id); // x8WIv7-mJelg7on_ALbx
@@ -140,7 +140,7 @@ function page({ params }: { params: { taskid: string } }) {
   const user = userStore();
 
   async function getTask() {
-    const resp = await fetch(`http://localhost:3030/tasks/${params.taskid}`, {
+    const resp = await fetch(`https://basel-ru5b.vercel.app/tasks/${params.taskid}`, {
       method: "GET",
       credentials: "include",
     });
@@ -195,7 +195,7 @@ function page({ params }: { params: { taskid: string } }) {
 
   async function addNewComment<T>(comment: T) {
     const resp = await fetch(
-      `http://localhost:3030/tasks/addcomment/${params.taskid}`,
+      `https://basel-ru5b.vercel.app/tasks/addcomment/${params.taskid}`,
       {
         method: "PATCH",
         credentials: "include",
@@ -211,7 +211,7 @@ function page({ params }: { params: { taskid: string } }) {
     if (isReply.edit === true) {
       console.log("send");
       const resp = await fetch(
-        `http://localhost:3030/tasks/${params.taskid}/comment`,
+        `https://basel-ru5b.vercel.app/tasks/${params.taskid}/comment`,
         {
           method: "PATCH",
           credentials: "include",
@@ -258,7 +258,7 @@ function page({ params }: { params: { taskid: string } }) {
 
   async function deleteComment(id: string) {
     const resp = await fetch(
-      `http://localhost:3030/tasks/${params.taskid}/comment`,
+      `https://basel-ru5b.vercel.app/tasks/${params.taskid}/comment`,
       {
         method: "PATCH",
         credentials: "include",
