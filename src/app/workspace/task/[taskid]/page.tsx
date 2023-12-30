@@ -120,6 +120,8 @@ function page({ params }: { params: { taskid: string } }) {
   const team = teamStore((state) => state.currentTeam);
 
   useEffect(() => {
+    getTask();
+
     
   }, []);
 
