@@ -120,9 +120,7 @@ function page({ params }: { params: { taskid: string } }) {
   const team = teamStore((state) => state.currentTeam);
 
   useEffect(() => {
-    setInterval(() => {
-      getTask();
-    }, 800);
+    
   }, []);
 
   const [userData, load] = useGetCurrentUser();
@@ -138,7 +136,7 @@ function page({ params }: { params: { taskid: string } }) {
 
     if (data.data !== "error") {
       setCurrentTask(data.data);
-      location.reload()
+      location.re()
     } else {
       setError(true);
     }
