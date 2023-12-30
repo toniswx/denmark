@@ -74,7 +74,7 @@ const StepOne = () => {
 
     console.log(values)
 
-    fetch("http://localhost:3030/team/create/new", {
+    fetch("https://basel-ru5b.vercel.app/team/create/new", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -97,7 +97,7 @@ const StepOne = () => {
   }
 
   async function getData() {
-    const getUserData = await fetch("http://localhost:3030/user/get/current", {
+    const getUserData = await fetch("https://basel-ru5b.vercel.app/user/get/current", {
       method: "GET",
       credentials: "include",
       headers: {

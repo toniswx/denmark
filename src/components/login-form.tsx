@@ -39,7 +39,7 @@ function LoginForm() {
  async function onSubmit(values: z.infer<typeof loginSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-      const data = await fetch("http://localhost:3030/user/login", {
+      const data = await fetch("https://basel-ru5b.vercel.app/user/login", {
       method: "POST",
       credentials: "include",
       headers: {

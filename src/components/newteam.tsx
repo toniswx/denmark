@@ -63,7 +63,7 @@ function newteam() {
     // ✅ This will be type-safe and validated.
     console.log(values);
 
-    const resp = await fetch("http://localhost:3030/team/invite/user", {
+    const resp = await fetch("https://basel-ru5b.vercel.app/team/invite/user", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -88,7 +88,7 @@ function newteam() {
       teamName: card?.teamName,
     };
     console.log(userData);
-    const resp = await fetch("http://localhost:3030/team/add/user", {
+    const resp = await fetch("https://basel-ru5b.vercel.app/team/add/user", {
       method: "POST",
       credentials: "include",
       headers: {

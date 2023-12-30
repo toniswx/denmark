@@ -17,7 +17,7 @@ export default function useGetCurrentUser() {
     setStatus("loading");
     async function getData() {
       const getUserData = await fetch(
-        "http://localhost:3030/user/get/current",
+        "https://basel-ru5b.vercel.app/user/get/current",
         {
           method: "GET",
           credentials: "include",

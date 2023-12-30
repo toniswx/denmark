@@ -38,7 +38,7 @@ function layout({ children }: { children: React.ReactNode }) {
   }, [status, projectIndex]);
 
   const getProject = async (id: string) => {
-    const resp = await fetch("http://localhost:3030/team/" + id, {
+    const resp = await fetch("https://basel-ru5b.vercel.app/team/" + id, {
       method: "GET",
       credentials: "include",
       headers: {

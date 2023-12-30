@@ -208,7 +208,7 @@ function createAccountForm() {
 
 
     try {
-      const response = await fetch("http://localhost:3030/user/create/new", {
+      const response = await fetch("https://basel-ru5b.vercel.app/user/create/new", {
         method: "POST",
         credentials: "include",
         headers:{

@@ -100,7 +100,7 @@ export function DropdownMenuDemo() {
 
   const handleLogOut = async () => {
     try {
-      const res = await fetch("http://localhost:3030/user/logout", {
+      const res = await fetch("https://basel-ru5b.vercel.app/user/logout", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -286,7 +286,7 @@ const Preferencies = (): JSX.Element => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-    const resp = await fetch("http://localhost:3030/team/config", {
+    const resp = await fetch("https://basel-ru5b.vercel.app/team/config", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -310,7 +310,7 @@ const Preferencies = (): JSX.Element => {
   }
 
   const handleDeleteTeam = async () => {
-    const resp = await fetch("http://localhost:3030/team/config", {
+    const resp = await fetch("https://basel-ru5b.vercel.app/team/config", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -397,7 +397,7 @@ const Members = (): JSX.Element => {
     console.log(id)
 
     try{
-     const resp = await fetch("http://localhost:3030/team/deleteUser",{
+     const resp = await fetch("https://basel-ru5b.vercel.app/team/deleteUser",{
        method:"POST",
        credentials:"include",
        headers:{

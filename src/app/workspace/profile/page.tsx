@@ -62,7 +62,7 @@ function page() {
     if (name === undefined) return;
     if (bio === undefined) return;
 
-    const resp = await fetch("http://localhost:3030/user/profile/edit", {
+    const resp = await fetch("https://basel-ru5b.vercel.app/user/profile/edit", {
       method: "PATCH",
       credentials: "include",
       headers: {
