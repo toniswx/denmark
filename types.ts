@@ -42,7 +42,7 @@ export type task = {
   admins: string[];
   createdBy: {
     name: string;
-    id: string;
+    _id: string;
     time: Date;
   };
   feed: {
@@ -56,6 +56,7 @@ export type task = {
 export type comment = {
   owner: string;
   id: string;
+ _id: string;  /*<<<refers to user in db */
   text: string;
   date: Date;
   reply_to?: comment;

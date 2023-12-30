@@ -15,8 +15,8 @@ function NewTask() {
   const team = userStore((state) => state.currentTeamIndex);
 
   return (
-    <div className="ml-2">
-      <div className=" ">
+    <div className="ml-2 w-full md:w-fit">
+      <div className="w-full md:w-fit">
         <Button
           className="w-full text-start flex justify-start items-center cursor-pointer"
           asChild

@@ -24,6 +24,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { AvatarIcon } from "@radix-ui/react-icons";
+import { Separator } from "@/components/ui/separator";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const userSchema = z.object({
   name: z
@@ -75,24 +78,15 @@ function page() {
       location.reload();
     }
   }
-
+  const route = useRouter()
   return (
-    <div className="flex items-center justify-center w-full h-screen space-x-36">
-      <div className="w-1/4 flex items-center justify-center flex-col  h-4/6 border rounded-md p-10">
-        <Avatar className="my-3">
-          <AvatarImage
-            className="h-20 rounded-full border  grayscale"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSvqTvcHQnUOp9v16B0GGEFuERhpf9jG316w&usqp=CAU"
-            alt="'img"
-          />
-          <AvatarFallback>{userData?.name[0]}</AvatarFallback>
-        </Avatar>
-        <h2 className="font-bold text-lg">{userData?.name}</h2>
-        <p className="my-2 text-sm text-muted-foreground">
-          {userData?.bio ? userData?.bio : "No bio provided."}
-        </p>
-      </div>
-      <div className="w-1/2 h-4/6 border rounded-md p-10">
+    <div className="flex items-center justify-center w-full h-screen md:space-x-36 p-10 flex-col">
+      
+      
+      <div className="md:w-1/2 w-full border rounded-md p-10">
+      <Button className="my-2 " onClick={()=>{
+        route.push("/dashboard")
+      }}><ArrowLeft /></Button>
         <div className="my-3">
           <h2 className="font-bold text-2xl">Profile</h2>
           <p className="text-muted-foreground text-sm">

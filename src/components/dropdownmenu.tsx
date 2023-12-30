@@ -139,13 +139,13 @@ export function DropdownMenuDemo() {
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu >
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
             className="p-2 flex items-center pl-5 justify-start"
           >
-            {userData?.name} <TriangleDownIcon className="ml-2" />
+            {team?.teamName} <TriangleDownIcon className="ml-2" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
@@ -191,10 +191,7 @@ export function DropdownMenuDemo() {
               ""
             )}
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <UserPlus className="mr-2 h-4 w-4" />
-                <span>Invite users</span>
-              </DropdownMenuSubTrigger>
+            
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
@@ -205,23 +202,14 @@ export function DropdownMenuDemo() {
               </DropdownMenuPortal>
             </DropdownMenuSub>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            onClick={() => {
-              handleLogOut();
-            }}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-          </DropdownMenuItem>
+       
         </DropdownMenuContent>
       </DropdownMenu>
 
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild></AlertDialogTrigger>
-        <AlertDialogContent className="w-9/12 h-3/4 flex flex-col space-y-4">
+        <AlertDialogContent className="w-11/12 md:w-7/12 h-5/6 flex flex-col space-y-4">
           <AlertDialogHeader className="h-fit">
             <AlertDialogTitle asChild>
               <div className="w-full flex items-center justify-between">
@@ -237,8 +225,8 @@ export function DropdownMenuDemo() {
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <div className="h-full flex items-center justify-start border rounded-md">
-            <div className="w-[230px] h-full border-r flex items-start flex-col justify-start py-7 space-y-2  p-2">
+          <div className="h-full flex items-start md:items-center justify-start md:border rounded-md flex-col md:flex-row ">
+            <div className="md:w-[230px] w-full h-full md:border-r  flex items-start flex-col justify-start md:my-7 space-y-2  p-2">
               {routes.map((route, route_index) => {
                 return (
                   <Button
@@ -263,7 +251,7 @@ export function DropdownMenuDemo() {
               })}
             </div>
             <div className="w-full h-full  ">
-              <ScrollArea className="h-[500px] p-7">
+              <ScrollArea className="h-[500px] p-2">
                 {routes[currentRoute].element}
               </ScrollArea>
             </div>
@@ -344,7 +332,7 @@ const Preferencies = (): JSX.Element => {
   };
 
   return (
-    <div className="p-2 space-y-5">
+    <div className="md:p-2 space-y-5 ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -354,7 +342,7 @@ const Preferencies = (): JSX.Element => {
               <FormItem>
                 <FormLabel>Team name</FormLabel>
                 <FormControl>
-                  <div className="flex items-center justify-between space-x-4">
+                  <div className="flex space-y-3  md:items-center items-start justify-between md:space-x-4 md:flex-row flex-col">
                     <Input {...field} className="h-fit " />
                     <Button
                       type="submit"
@@ -433,26 +421,25 @@ const Members = (): JSX.Element => {
 
   return (
     <div className="w-full ">
-      <div className="w-full    overflow-y-hidden  rounded-md p-4 ">
+      <div className="w-full overflow-y-hidden  rounded-md md:py-4 ">
         <h2>Team members</h2>
         <p className="text-sm text-muted-foreground">
           Manage your team members.
         </p>
       </div>
       <div className=" overflow-hidden">
-        <Table className="my-2    ">
+        <Table className="    ">
           <TableBody>
             {team?.users.map((user) => {
               return (
                 <TableRow>
                   <TableCell className="font-medium">
                     <div className="flex items-center justify-start">
-                      <CubeIcon className="mr-3 h-5 w-6" /> {user.name}
+                      <CubeIcon className="mr-2 h-5 w-6" /> {user.name}
                     </div>{" "}
                   </TableCell>
 
-                  <TableCell></TableCell>
-                  <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.email}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger>
@@ -468,21 +455,6 @@ const Members = (): JSX.Element => {
                         deleteUserFromTeam(user._id)
                         }}>Delete user</DropdownMenuItem>
 
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            Privileges
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent>
-                              <DropdownMenuItem>
-                                Set user as admin
-                              </DropdownMenuItem>
-                              <DropdownMenuItem>
-                                Reverse admin rights
-                              </DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

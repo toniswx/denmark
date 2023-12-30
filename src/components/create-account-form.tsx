@@ -249,7 +249,7 @@ function createAccountForm() {
     <ProgressDemo />
      </div> : "" }
     <div className="w-full  h-screen  flex items-center justify-center space-x-10 flex-row-reverse ">
-      <div className=" w-1/3 space-y-8">
+      <div className=" w-full space-y-8 p-10 md:p-0 md:w-1/3">
         <div>
           <h2 className="text-lg font-bold">Welcome !</h2>
           <p className="text-muted-foreground text-xs">
@@ -371,7 +371,7 @@ function createAccountForm() {
           </form>
         </Form>
       </div>
-      <div className="w-1/2  ">
+      <div className="w-1/2 hidden md:block  ">
         {appFeatures.map((features) => {
           return (
             <div className="my-5">

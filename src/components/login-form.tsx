@@ -57,7 +57,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
@@ -94,27 +94,27 @@ function LoginForm() {
           </Button>
         </form>
       </Form>
-      <div className="flex items-center justify-center my-5  ">
+      <div className="flex items-center justify-center my-5  flex-col md:flex-row space-y-3 md:space-y-0 ">
         <Link href={"/singin"} className="w-full">
           {" "}
           <Button className="w-full  " variant={"outline"}>
             {" "}
-            <OpenInNewWindowIcon className="mr-2" /> Create new account
+            <OpenInNewWindowIcon className="" /> Create new account
           </Button>{" "}
         </Link>
 
         <Link href={""} className="w-full">
           <Button className="w-full ml-1  " variant={"outline"}>
-            <LockClosedIcon className="mr-2" /> Recovery account
+            <LockClosedIcon className="" /> Recovery account
           </Button>
         </Link>
       </div>
       <Separator className="" />
 
-      <div className="flex items-start justify-center my-3 flex-col  ">
+      <div className="flex items-start justify-center my-3 flex-col w-full  ">
         {" "}
         <Button
-          className="flex flex-col w-full gap-1 m-2 "
+          className="flex flex-col w-full gap-1  "
           variant={"secondary"}
           disabled
         >

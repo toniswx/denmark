@@ -9,11 +9,11 @@ function page() {
  
 
   return (
-    <div className="h-screen w-full flex items-center justify-start">
-        <>
-          <div className="flex items-center h-screen justify-center   ">
-            <div className="w-full p-20   space-y-5 rounded-md  ">
-              <div>
+    <div className="h-screen w-full flex items-center justify-center p-20">
+        
+          <div className="flex items-center h-screen justify-center w-full   ">
+            <div className="w-full   rounded-md  ">
+              <div className="w-full">
                 <h2 className="text-2xl font-bold">Welcome Back 👋 </h2>
                 <p className="text-xs text-muted-foreground">
                   Sing in to start manage your projects
@@ -22,7 +22,7 @@ function page() {
               <LoginForm />
             </div>
           </div>
-        </>
+        
   
     </div>
   );

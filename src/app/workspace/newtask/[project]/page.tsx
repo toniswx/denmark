@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { v4 as uuidv4 } from 'uuid';import { Button } from "@/components/ui/button";
+import { v4 as uuidv4 } from "uuid";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import userStore from "../../../../../store/user";
 
@@ -36,15 +37,13 @@ const newTaskSchema = z.object({
   priority: z.enum(["High", "Medium", "Low", "Urgent", "Important", "Normal"]),
 });
 
-import { ImportIcon } from "lucide-react";
+import { ArrowLeft, ImportIcon } from "lucide-react";
 import { task } from "../../../../../types";
 import { Separator } from "@/components/ui/separator";
 import { randomUUID } from "crypto";
 import { useRouter } from "next/navigation";
 
 function page({ params }: { params: { project: string } }) {
-
-
   const [quickVewTask, setQuickVewTask] = useState<task | null>(null);
   const user = userStore((state) => state.user);
   const team = userStore((state) => state.currentTeamIndex);
@@ -60,7 +59,7 @@ function page({ params }: { params: { project: string } }) {
     { value: "Normal", label: "Normal" },
   ];
 
-   const route = useRouter()
+  const route = useRouter();
 
   const form = useForm<z.infer<typeof newTaskSchema>>({
     resolver: zodResolver(newTaskSchema),
@@ -72,14 +71,13 @@ function page({ params }: { params: { project: string } }) {
     // ✅ This will be type-safe and validated.
     handleClientScriptLoad();
 
-
     if (user !== null) {
       const T = values.priority;
       const newTask: task = {
-        createdBy:{
-          name:user.name,
-          _id:user._id,
-          time:new Date()
+        createdBy: {
+          name: user.name,
+          _id: user._id,
+          time: new Date(),
         },
         id: uuidv4(),
         title: values.title,
@@ -88,9 +86,15 @@ function page({ params }: { params: { project: string } }) {
         status: "To-do",
         comments: [],
         admins: [],
-        teamId:user.teams[team].teamId,
-        feed:[{id:uuidv4(),action:'Opened this issue',time:new Date(),name:user.name}]
-
+        teamId: user.teams[team].teamId,
+        feed: [
+          {
+            id: uuidv4(),
+            action: "Opened this issue",
+            time: new Date(),
+            name: user.name,
+          },
+        ],
       };
 
       handleCreateNewTask(newTask);
@@ -103,7 +107,7 @@ function page({ params }: { params: { project: string } }) {
 
   const handleCreateNewTask = async (task: task) => {
     console.log("oi");
-  
+
     try {
       const resp = await fetch("http://localhost:3030/team/newtask", {
         method: "POST",
@@ -112,27 +116,28 @@ function page({ params }: { params: { project: string } }) {
         },
         body: JSON.stringify({ task: task, teamId: params.project }),
       });
-  
+
       if (!resp.ok) {
         throw new Error(`HTTP error! Status: ${resp.status}`);
       }
-  
-      
-    setTimeout(() => {
-      route.push("/dashboard/project/"+params.project)
-    }, 1000);
-  
-      
+
+      setTimeout(() => {
+        route.push("/dashboard");
+      }, 1000);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  
 
   return (
     <div className="flex items-center justify-center w-full h-full flex-row space-x-10">
-      <div className="w-1/3 transition-all">
+      <div className="w-11/12 md:w-1/2 lg:w-1/3 transition-all">
         <div className="w-full p-2 my-4 space-y-3">
+          <Button onClick={()=>{
+            route.push('/dashboard')
+          }}>
+            <ArrowLeft />
+          </Button>
           <h2 className="text-3xl font-bold space-y-3 ">Create a new task</h2>
           <p className="text-xs text-muted-foreground ">
             Craft your task with precision. Define a title, set its priority,

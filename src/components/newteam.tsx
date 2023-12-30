@@ -106,15 +106,15 @@ function newteam() {
   };
 
   return (
-    <div className="flex  justify-around flex-col  items-center  ">
-      <div>
+    <div className="flex justify-around flex-col  items-center w-full   ">
+      <div className="w-full">
         <AlertDialog>
-          <AlertDialogTrigger asChild className="">
-            <Button variant="outline" className="">
+          <AlertDialogTrigger asChild className=" w-full">
+            <Button variant="outline" className="w-full flex items-center justify-start text-start">
               Add new team
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className="transition-all">
+          <AlertDialogContent className="transition-all w-9/12">
             <AlertDialogHeader>
               <AlertDialogTitle>Add new group by invite</AlertDialogTitle>
               <AlertDialogDescription>
@@ -166,8 +166,8 @@ function newteam() {
                 ) : (
                   ""
                 )}
-                <AlertDialogFooter className="justify-start sm:justify-start">
-                  <Button type="submit">Find team</Button>
+                <AlertDialogFooter className="justify-start sm:justify-start ">
+                  <Button type="submit" className="my-2">Find team</Button>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                 </AlertDialogFooter>
               </form>
