@@ -6,7 +6,7 @@
 Discover seamless collaboration on our powerful platform, catering to both solo and team endeavors. With an intuitive interface and robust task management, it transforms work into a streamlined experience. Boost productivity, enhance communication, and effortlessly meet deadlines. Your journey to efficient and organized collaboration begins here.
 
 
-![App Screenshot](https://raw.githubusercontent.com/de-Padua/Basel/main/public/aasdasdas.PNG)
+![App Screenshot](https://raw.githubusercontent.com/de-Padua/denmark/main/public/project.PNG)
 
 
 ## Development log
