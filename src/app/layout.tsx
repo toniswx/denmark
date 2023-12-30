@@ -5,8 +5,8 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Basel",
-  description: "Next gen task manager",
+  title: "Denmark",
+  description: "Next gen task manager for you.",
 };
 
 export default function RootLayout({
