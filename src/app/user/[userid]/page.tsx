@@ -6,7 +6,7 @@ function page({ params }: { params: { userid: string } }) {
   const [data, setData] = useState<{ name: string; bio: string } | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3030/user/${params.userid}`, { method: "GET" })
+    fetch(`https://basel-ru5b.vercel.app/user/${params.userid}`, { method: "GET" })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
