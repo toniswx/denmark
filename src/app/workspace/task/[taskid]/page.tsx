@@ -120,21 +120,9 @@ function page({ params }: { params: { taskid: string } }) {
   const team = teamStore((state) => state.currentTeam);
 
   useEffect(() => {
-    getTask();
-
-    const socket = io("https://basel-ru5b.vercel.app");
-
-    socket.on("connect", () => {
-      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-    });
-
-    socket.on("new-comment", () => {
+    setInterval(() => {
       getTask();
-    });
-    // Cleanup on component unmount
-    return () => {
-      socket.disconnect();
-    };
+    }, 800);
   }, []);
 
   const [userData, load] = useGetCurrentUser();
