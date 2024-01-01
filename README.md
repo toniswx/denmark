@@ -9,85 +9,99 @@ Discover seamless collaboration on our powerful platform, catering to both solo 
 ![App Screenshot](https://raw.githubusercontent.com/de-Padua/denmark/b742dde9c4dc02001bb07820c165251de807a128/public/project.png)
 
 
-## Development log
 
-10/12/2023 -  Start of read-me logs 
 
 
 ## Roadmap
 
-## 1. **Project Setup**
-   - [x] Define project scope and requirements
-   - [x] Set up version control (e.g., Git)
-   - [x] Choose a development stack (MERN) 
-
-## 2. **Frontend Development**
-   - [ ] Design user interface mockups
-   - [x] Set up project structure
-   - [x] Create main layout and navigation components
-   - [ ] Implement task list view
-   - [x] Develop task creation and editing forms
-   - [x] Add responsiveness and styling
-
-## 3. **Backend Development**
-   - [x] Set up server and database (e.g., Node.js with Express and MongoDB)
-   - [x] Implement user authentication and authorization
-   - [ ] Create API endpoints for tasks (CRUD operations) 
-   - [ ] Implement task-related business logic
-   - [ ] Set up error handling and validation
-
-## 4. **Integration**
-   - [x] Connect frontend to backend API
-   - [x] Test API calls and data retrieval
-   - [x] Handle authentication and authorization on the frontend
-   - [x] Ensure smooth data flow between frontend and backend
-
-## 5. **User Authentication**
-   - [x] Implement user registration and login functionality
-   - [x] Set up secure password storage (bcrypt)
-   - [ ] Implement password recovery/reset functionality
-
-## 6. **Testing**
-   - [ ] Write unit tests for critical components
-   - [ ] Perform integration testing
-   - [ ] Conduct user acceptance testing (UAT)
-   - [ ] Address and fix identified issues
-
-## 7. **Deployment**
-   - [ ] Choose a hosting solution (e.g., Heroku, AWS, Netlify)
-   - [ ] Set up continuous integration and deployment (CI/CD) pipeline
-   - [ ] Deploy the application to a production environment
-   - [ ] Configure domain and SSL certificates (if applicable)
-
-## 8. **Monitoring and Maintenance**
-   - [ ] Implement logging for errors and user actions
-   - [ ] Set up monitoring tools (e.g., Sentry, Google Analytics)
-   - [ ] Plan for regular maintenance and updates
-
-## 9. **Documentation**
-   - [x] Create user documentation (how-to guides, FAQs)
-   - [ ] Document API endpoints for potential future integrations
-   - [ ] Write developer documentation for codebase and architecture
-
-## 10. **Future Enhancements**
-   - [ ] Gather user feedback for future improvements
-   - [ ] Consider additional features (e.g., task categories, reminders)
-   - [ ] Plan for scalability and performance optimizations
-## 
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+- Get better suport on Chrome divices 
+- Add new features related to text formating
+- Add text formating on task creation 
+- Add pagination to prevent overload fetch calls to the DB
 
 
 
 
-## Feedback
+## Folder Structure
 
-Se você tiver algum feedback, por favor nos deixe saber criando um novo Issue.
+Here's a brief overview of the project's folder structure:
+
+- **`/src`:** Contains the source code.
+  - **`/components`:** React components used throughout the project.
+  - **`/pages`:** Next.js pages for routing.
+  - **`/styles`:** Tailwind CSS styles and global stylesheets.
+  - **`/lib`:** Utility functions or helper modules.
+## Tech Stack
+
+- **React:** For building user interfaces.
+- **TypeScript:** Adds static typing to JavaScript, improving code quality.
+- **Next.js:** A React framework for server-rendered applications.
+- **Tailwind CSS:** A utility-first CSS framework for quick and responsive styling.
 
 
-## Stack utilizada
 
-**Front-end:** React, Redux, TailwindCSS,Next,TS,JS
 
-**Back-end:** Node, Express,Mongo
 
+# Project Contribution Guidelines
+
+
+If you're interested in contributing to this project, please follow these steps:
+
+- 1. Open an issue on this repository.
+- 2. Add your contribution details to the issue, adhering to the provided guidelines.
+
+## How to Contribute
+
+ **Fork the Repository:**
+   - Fork the repository to your GitHub account.
+
+ **Clone the Repository:**
+   - Clone the forked repository to your local machine.
+     ```bash
+     git clone https://github.com/de-Padua/denmark.git
+     ```
+
+ **Create a Branch:**
+   - Create a new branch for your contribution.
+     ```bash
+     git checkout -b feature/your-feature
+     ```
+
+ **Make Changes:**
+   - Implement your changes, following the project's coding standards.
+
+ **Commit Changes:**
+   - Commit your changes with a clear and concise commit message.
+     ```bash
+     git commit -m "Add your meaningful commit message here"
+     ```
+
+ **Push Changes:**
+   - Push your changes to your forked repository.
+     ```bash
+     git push origin feature/your-feature
+     ```
+
+ **Open a Pull Request:**
+   - Open a pull request from your forked repository to the main project repository.
+   - Provide a detailed description of your changes.
+
+## Code Standards
+
+- Follow the coding style and standards used in the project.
+- Write clear, concise, and meaningful commit messages.
+- Keep code clean, readable, and well-documented.
+
+## Issue Tracker
+
+- Use the issue tracker to report bugs or suggest new features.
+- Search for existing issues before creating a new one.
+- Provide detailed information when opening an issue.
+
+## Community Guidelines
+
+- Be respectful and considerate of others' opinions.
+- Help and support fellow contributors.
+- Avoid offensive language and behavior.
+
+By following these guidelines, you contribute to a positive and collaborative development environment. Thank you for your contribution!
