@@ -121,24 +121,25 @@ function page({ params }: { params: { taskid: string } }) {
 
   useEffect(() => {
     getTask();
-
-    
   }, []);
 
   const [userData, load] = useGetCurrentUser();
   const user = userStore();
 
   async function getTask() {
-    const resp = await fetch(`https://basel-ru5b.vercel.app/tasks/${params.taskid}`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const resp = await fetch(
+      `https://basel-ru5b.vercel.app/tasks/${params.taskid}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
 
     const data = await resp.json();
 
     if (data.data !== "error") {
       setCurrentTask(data.data);
-      location.re()
+      location.re();
     } else {
       setError(true);
     }
@@ -179,6 +180,7 @@ function page({ params }: { params: { taskid: string } }) {
     };
 
     editComment(newComment);
+    getTask();
 
     clearForm();
   }
@@ -237,6 +239,7 @@ function page({ params }: { params: { taskid: string } }) {
         }
       );
     }
+    getTask();
   }
 
   const options = {
@@ -262,6 +265,7 @@ function page({ params }: { params: { taskid: string } }) {
         }),
       }
     );
+    getTask();
   }
 
   const clearForm = () => {
@@ -282,9 +286,15 @@ function page({ params }: { params: { taskid: string } }) {
             <div className="flex  w-full p-5 lg:p-40 flex-col lg:flex-row ">
               <div className="w-full lg:w-2/3 flex items-center lg:items-start justify-center flex-col  ">
                 <div className="flex flex-col w-11/12 rounded-md space-y-3  ">
-                  <Button variant={'outline'} onClick={()=>{
-                    route.push("/dashboard")
-                  }} className="my-5 w-fit"><ExitIcon /></Button>
+                  <Button
+                    variant={"outline"}
+                    onClick={() => {
+                      route.push("/dashboard");
+                    }}
+                    className="my-5 w-fit"
+                  >
+                    <ExitIcon />
+                  </Button>
                   <div className="w-full ">
                     <div className="flex  items-center justify-start space-x-2">
                       <div className="w-full ">
@@ -321,13 +331,13 @@ function page({ params }: { params: { taskid: string } }) {
                     </p>
                   </div>
                   <div className=" flex-col md:flex-row flex items-start md:items-center space-y-2 justify-start space-x-2 grayscale  ">
-                   <div className="flex items-center justify-center w-fit  space-x-2">
-                   <Badge variant="outline">
-                      <Route className="mr-2 text-xs w-4 h-3" />{" "}
-                      {currentTask.status}
-                    </Badge>
-                    <Badge>{currentTask.priority}</Badge>
-                   </div>
+                    <div className="flex items-center justify-center w-fit  space-x-2">
+                      <Badge variant="outline">
+                        <Route className="mr-2 text-xs w-4 h-3" />{" "}
+                        {currentTask.status}
+                      </Badge>
+                      <Badge>{currentTask.priority}</Badge>
+                    </div>
 
                     <p className="text-xs md:text-sm">
                       <span
@@ -344,7 +354,6 @@ function page({ params }: { params: { taskid: string } }) {
                       )}
                       · {currentTask.comments.length} comments
                     </p>
-                  
                   </div>
 
                   <div className="p-4 rounded-lg border">
@@ -358,7 +367,7 @@ function page({ params }: { params: { taskid: string } }) {
                         >
                           {currentTask.createdBy.name}
                         </p>
-                         
+
                         <p className="text-xs  text-muted-foreground font-semibold">
                           {new Date(currentTask.createdBy.time).toLocaleString(
                             "en-US"
@@ -376,62 +385,64 @@ function page({ params }: { params: { taskid: string } }) {
                     return (
                       <div className="flex items-center rounded-lg border h-full p-5 justify-between relative">
                         <div className="w-full">
-                        <div className="mb-2 w-fit">
-                          <Menubar className="rounded-lg flex h-5">
-                            {comment.owner === userData?.name ? (
-                              ""
-                            ) : (
-                              <MenubarMenu>
-                                <MenubarTrigger className=" h-4   ">
-                                  <Reply className="h-4" />
-                                </MenubarTrigger>
-                                <MenubarContent>
-                                  <MenubarItem
-                                    onClick={() => {
-                                      setReply({ edit: true, index: index });
-                                    }}
-                                  >
-                                    Reply this comment{" "}
-                                    <MenubarShortcut>⌘T</MenubarShortcut>
-                                  </MenubarItem>
-                                </MenubarContent>
-                              </MenubarMenu>
-                            )}
+                          <div className="mb-2 w-fit">
+                            <Menubar className="rounded-lg flex h-5">
+                              {comment.owner === userData?.name ? (
+                                ""
+                              ) : (
+                                <MenubarMenu>
+                                  <MenubarTrigger className=" h-4   ">
+                                    <Reply className="h-4" />
+                                  </MenubarTrigger>
+                                  <MenubarContent>
+                                    <MenubarItem
+                                      onClick={() => {
+                                        setReply({ edit: true, index: index });
+                                      }}
+                                    >
+                                      Reply this comment{" "}
+                                      <MenubarShortcut>⌘T</MenubarShortcut>
+                                    </MenubarItem>
+                                  </MenubarContent>
+                                </MenubarMenu>
+                              )}
 
-                            {comment.owner === userData?.name ? (
-                              <MenubarMenu>
-                                <MenubarTrigger className=" h-4  text-xs ">
-                                  <DotsHorizontalIcon />
-                                </MenubarTrigger>
-                                <MenubarContent>
-                                  <MenubarItem
-                                    onClick={() => {
-                                      setEditing({ edit: true, index: index });
-                                    }}
-                                  >
-                                    Edit comment{" "}
-                                    <MenubarShortcut>⌘Z</MenubarShortcut>
-                                  </MenubarItem>
-                                  <MenubarItem
-                                    onClick={() => {
-                                      deleteComment(comment.id);
-                                    }}
-                                    className="bg-red-500 text-white"
-                                  >
-                                    Delete comment{" "}
-                                    <MenubarShortcut className="text-white">
-                                      ⇧⌘Z
-                                    </MenubarShortcut>
-                                  </MenubarItem>
-                                </MenubarContent>
-                              </MenubarMenu>
-                            ) : (
-                              ""
-                            )}
-                          </Menubar>
-                        </div>
+                              {comment.owner === userData?.name ? (
+                                <MenubarMenu>
+                                  <MenubarTrigger className=" h-4  text-xs ">
+                                    <DotsHorizontalIcon />
+                                  </MenubarTrigger>
+                                  <MenubarContent>
+                                    <MenubarItem
+                                      onClick={() => {
+                                        setEditing({
+                                          edit: true,
+                                          index: index,
+                                        });
+                                      }}
+                                    >
+                                      Edit comment{" "}
+                                      <MenubarShortcut>⌘Z</MenubarShortcut>
+                                    </MenubarItem>
+                                    <MenubarItem
+                                      onClick={() => {
+                                        deleteComment(comment.id);
+                                      }}
+                                      className="bg-red-500 text-white"
+                                    >
+                                      Delete comment{" "}
+                                      <MenubarShortcut className="text-white">
+                                        ⇧⌘Z
+                                      </MenubarShortcut>
+                                    </MenubarItem>
+                                  </MenubarContent>
+                                </MenubarMenu>
+                              ) : (
+                                ""
+                              )}
+                            </Menubar>
+                          </div>
                           <div className="text-xs flex items-start ">
-                         
                             <div className="flex items-center justify-start rounded-lg space-x-1   h-3">
                               <p
                                 className="text-xs  hover:font-extrabold transition-all cursor-pointer   font-semibold  text-blue-500   "
@@ -441,12 +452,11 @@ function page({ params }: { params: { taskid: string } }) {
                               >
                                 {comment.owner}
                               </p>
-                              
+
                               <p className="text-xs   text-muted-foreground font-semibold">
                                 {new Date(comment.date).toLocaleString("en-US")}
                               </p>
                             </div>
-                            
                           </div>
 
                           {isEditing.index === index ? (
@@ -510,7 +520,6 @@ function page({ params }: { params: { taskid: string } }) {
                                 </div>
                               )}
                               <p className=" text-xs ">{comment.text}</p>
-                              
                             </div>
                           )}
                           {isReply.index === index ? (
@@ -563,7 +572,6 @@ function page({ params }: { params: { taskid: string } }) {
                             ""
                           )}
                         </div>
-                       
                       </div>
                     );
                   })}
@@ -608,9 +616,7 @@ function page({ params }: { params: { taskid: string } }) {
                                     {...field}
                                   />
                                 </FormControl>
-                                <FormDescription>
-                                 
-                                </FormDescription>
+                                <FormDescription></FormDescription>
                                 <FormMessage />
                               </FormItem>
                             )}
@@ -647,7 +653,6 @@ function page({ params }: { params: { taskid: string } }) {
             </div>
           ) : (
             <div className="w-full h-screen flex items-center justify-center flex-col absolute ">
-            
               <div className="bottom-0 absolute left-0 m-6">
                 <LoadingToast />
               </div>
