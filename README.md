@@ -1,3 +1,4 @@
+
 ![Logo](https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f4afae6ef0b42dfd46506_denmark-white.svg)
 
 
@@ -11,6 +12,16 @@ Discover seamless collaboration on our powerful platform, catering to both solo 
 
 
 
+
+## Screenshots
+
+![App Screenshot](https://github.com/de-Padua/denmark/blob/main/public/Captura%20de%20tela%202023-12-29%20-%2021.16.22.png?raw=true)
+
+![App Screenshot](https://github.com/de-Padua/denmark/blob/main/public/Captura%20de%20tela%202023-12-29%20-%2021.16.36.png?raw=true)
+
+![App Screenshot](https://github.com/de-Padua/denmark/blob/main/public/Captura%20de%20tela%202023-12-29%20-%2021.17.24.png?raw=true)
+
+![App Screenshot](https://github.com/de-Padua/denmark/blob/main/public/Captura%20de%20tela%202023-12-29%20-%2021.16.45.png?raw=true)
 
 ## Roadmap
 
@@ -105,3 +116,13 @@ If you're interested in contributing to this project, please follow these steps:
 - Avoid offensive language and behavior.
 
 By following these guidelines, you contribute to a positive and collaborative development environment. Thank you for your contribution!
+
+## Licença
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+## Autores
+
+- [@de-Padua](https://www.github.com/de-Padua)
+
