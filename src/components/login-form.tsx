@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -19,11 +19,12 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { ApiResponse } from "../../types";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 function LoginForm() {
+  const [loadingLogin, setLoadingLogin] = useState(false);
 
-  
-  const route = useRouter()
+  const route = useRouter();
 
   const loginSchema = z.object({
     email: z.string().email({
@@ -36,11 +37,11 @@ function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
- async function onSubmit(values: z.infer<typeof loginSchema>) {
-     console.log(values)
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    setLoadingLogin(true);
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-      const data = await fetch("https://basel-ru5b.vercel.app/user/login", {
+    const data = await fetch("https://basel-ru5b.vercel.app/user/login", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -49,12 +50,12 @@ function LoginForm() {
       body: JSON.stringify(values),
     });
 
-   if(data.ok){
-      route.push("/dashboard")
-   }
-  
-  
-
+    if (data.ok) {
+      route.push("/dashboard");
+    } else {
+      setLoadingLogin(false);
+      alert("Error at login,please try again.");
+    }
   }
 
   return (
@@ -89,10 +90,17 @@ function LoginForm() {
               </FormItem>
             )}
           />
-
-          <Button type="submit" className="w-full">
-            Login
-          </Button>
+          {loadingLogin ? (
+            <Button className="w-full h-full cursor-progress ">
+              {" "}
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading, please
+              wait...{" "}
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
+          )}
         </form>
       </Form>
       <div className="flex items-center justify-center my-5  flex-col md:flex-row space-y-3 md:space-y-0 ">
