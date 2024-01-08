@@ -120,7 +120,9 @@ function page({ params }: { params: { taskid: string } }) {
   const team = teamStore((state) => state.currentTeam);
 
   useEffect(() => {
-    getTask();
+    setInterval(() => {
+      getTask();
+    }, 10000);
   }, []);
 
   const [userData, load] = useGetCurrentUser();
@@ -194,6 +196,7 @@ function page({ params }: { params: { taskid: string } }) {
         body: JSON.stringify({ comment: comment }),
       }
     );
+    getTask();
   }
 
   async function editComment(comment: comment) {
