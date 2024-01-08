@@ -139,7 +139,6 @@ function page({ params }: { params: { taskid: string } }) {
 
     if (data.data !== "error") {
       setCurrentTask(data.data);
-      location.reload();
     } else {
       setError(true);
     }
