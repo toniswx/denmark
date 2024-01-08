@@ -139,7 +139,7 @@ function page({ params }: { params: { taskid: string } }) {
 
     if (data.data !== "error") {
       setCurrentTask(data.data);
-      location.re();
+      location.reload();
     } else {
       setError(true);
     }
@@ -166,7 +166,6 @@ function page({ params }: { params: { taskid: string } }) {
     };
 
     addNewComment(newComment);
-
     form.resetField("comment");
   }
 
@@ -181,7 +180,6 @@ function page({ params }: { params: { taskid: string } }) {
 
     editComment(newComment);
     getTask();
-
     clearForm();
   }
 
@@ -238,8 +236,8 @@ function page({ params }: { params: { taskid: string } }) {
           }),
         }
       );
+      getTask();
     }
-    getTask();
   }
 
   const options = {
